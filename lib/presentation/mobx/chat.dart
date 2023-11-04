@@ -5,24 +5,20 @@ import 'package:mobx/mobx.dart';
 
 part 'chat.g.dart';
 
-final chatRepository = ChatRepository();
+final _chatRepository = ChatRepository();
 
 /// Store for managing the chat screen.
 class Chat = ChatStore with _$Chat;
 
 abstract class ChatStore with Store {
   @observable
-  String contactId = '1';
+  String contactId = '';
 
   @observable
-  String contactName = 'Juan';
+  Contact? contact;
 
   @observable
-  bool online = false;
-
-  @observable
-  String avatarUrl =
-      'https://i.pinimg.com/564x/fb/a1/f8/fba1f8d46d07866fbbd520be71f73087.jpg';
+  List<Contact> contacts = [];
 
   @observable
   String userId = '0';
@@ -36,29 +32,33 @@ abstract class ChatStore with Store {
       text: value,
       time: DateTime.now(),
       senderId: userId,
+      sender: Sender.user,
     );
-    messages.add(message);
-    chatRepository.sendMessage(message);
+    // messages.add(message);
+    _chatRepository.sendMessage(message);
+    getMessages();
   }
 
   @action
   void getMessages() {
+    messages.clear();
     final newMessages = ObservableList<Message>.of(
-      chatRepository.getMessages(contactId),
+      _chatRepository.getMessages(contactId),
     );
     messages.addAll(newMessages);
     messages.sort((a, b) => a.time.compareTo(b.time));
   }
 
   @action
-  void setContactId(String value) => contactId = value;
+  void getContacts() {
+    contacts = _chatRepository.getContacts();
+  }
 
-  @computed
-  ChatEntitie get getChatData => ChatEntitie(
-        id: contactId,
-        contactName: contactName,
-        messages: messages,
-        online: online,
-        avatarUrl: avatarUrl,
-      );
+  @action
+  void setContactId(String value) {
+    contactId = value;
+    contacts = _chatRepository.getContacts();
+    contact = contacts.firstWhere((element) => element.id == value);
+    getMessages();
+  }
 }

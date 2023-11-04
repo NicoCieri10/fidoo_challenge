@@ -1,28 +1,46 @@
-import 'package:fidooo_challenge/domain/domain.dart';
+// import 'package:fidooo_challenge/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 
 class ChatHeader extends StatelessWidget {
-  const ChatHeader(this.chatEntitie, {super.key});
+  // const ChatHeader(this.chatEntitie, {super.key});
+  const ChatHeader({
+    super.key,
+    required this.contactName,
+    required this.avatarUrl,
+    required this.online,
+  });
 
-  final ChatEntitie chatEntitie;
+  // final ChatEntitie chatEntitie;
+  final String contactName;
+  final String avatarUrl;
+  final bool online;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+
     return Container(
-      color: Colors.blue[900],
+      color: theme.primary,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
+          horizontal: 5,
           vertical: 7,
         ),
         child: SizedBox(
           height: 60,
           child: Row(
             children: [
-              _ContactImage(chatEntitie),
+              const _BackButton(),
+              // _ContactImage(chatEntitie),
+              _ContactImage(avatarUrl),
               const SizedBox(width: 20),
-              _ContactInfo(chatEntitie),
+              // _ContactInfo(chatEntitie),
+              _ContactInfo(
+                contactName: contactName,
+                online: online,
+              ),
             ],
           ),
         ),
@@ -31,10 +49,25 @@ class ChatHeader extends StatelessWidget {
   }
 }
 
-class _ContactImage extends StatelessWidget {
-  const _ContactImage(this.chatEntitie);
+class _BackButton extends StatelessWidget {
+  const _BackButton();
 
-  final ChatEntitie chatEntitie;
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: context.pop,
+      icon: const Icon(Icons.arrow_back_ios),
+      color: Colors.white,
+    );
+  }
+}
+
+class _ContactImage extends StatelessWidget {
+  // const _ContactImage(this.chatEntitie);
+  const _ContactImage(this.avatarUrl);
+
+  // final ChatEntitie chatEntitie;
+  final String avatarUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +79,8 @@ class _ContactImage extends StatelessWidget {
           height: 55,
           width: 55,
           child: Image.network(
-            chatEntitie.avatarUrl,
+            // chatEntitie.avatarUrl,
+            avatarUrl,
             fit: BoxFit.contain,
           ),
         ),
@@ -56,9 +90,15 @@ class _ContactImage extends StatelessWidget {
 }
 
 class _ContactInfo extends StatelessWidget {
-  const _ContactInfo(this.chatEntitie);
+  // const _ContactInfo(this.chatEntitie);
+  const _ContactInfo({
+    required this.contactName,
+    required this.online,
+  });
 
-  final ChatEntitie chatEntitie;
+  // final ChatEntitie chatEntitie;
+  final String contactName;
+  final bool online;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +109,8 @@ class _ContactInfo extends StatelessWidget {
         SizedBox(
           child: Observer(
             builder: (_) => Text(
-              chatEntitie.contactName,
+              // chatEntitie.contactName,
+              contactName,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -79,7 +120,7 @@ class _ContactInfo extends StatelessWidget {
         ),
         Observer(
           builder: (_) {
-            if (chatEntitie.online) {
+            if (online) {
               return const _StatusRow(
                 text: 'Online',
                 dotColor: Colors.green,

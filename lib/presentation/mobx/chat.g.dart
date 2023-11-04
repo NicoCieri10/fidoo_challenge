@@ -9,14 +9,6 @@ part of 'chat.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$Chat on ChatStore, Store {
-  Computed<ChatEntitie>? _$getChatDataComputed;
-
-  @override
-  ChatEntitie get getChatData =>
-      (_$getChatDataComputed ??= Computed<ChatEntitie>(() => super.getChatData,
-              name: 'ChatStore.getChatData'))
-          .value;
-
   late final _$contactIdAtom =
       Atom(name: 'ChatStore.contactId', context: context);
 
@@ -33,50 +25,34 @@ mixin _$Chat on ChatStore, Store {
     });
   }
 
-  late final _$contactNameAtom =
-      Atom(name: 'ChatStore.contactName', context: context);
+  late final _$contactAtom = Atom(name: 'ChatStore.contact', context: context);
 
   @override
-  String get contactName {
-    _$contactNameAtom.reportRead();
-    return super.contactName;
+  Contact? get contact {
+    _$contactAtom.reportRead();
+    return super.contact;
   }
 
   @override
-  set contactName(String value) {
-    _$contactNameAtom.reportWrite(value, super.contactName, () {
-      super.contactName = value;
+  set contact(Contact? value) {
+    _$contactAtom.reportWrite(value, super.contact, () {
+      super.contact = value;
     });
   }
 
-  late final _$onlineAtom = Atom(name: 'ChatStore.online', context: context);
+  late final _$contactsAtom =
+      Atom(name: 'ChatStore.contacts', context: context);
 
   @override
-  bool get online {
-    _$onlineAtom.reportRead();
-    return super.online;
+  List<Contact> get contacts {
+    _$contactsAtom.reportRead();
+    return super.contacts;
   }
 
   @override
-  set online(bool value) {
-    _$onlineAtom.reportWrite(value, super.online, () {
-      super.online = value;
-    });
-  }
-
-  late final _$avatarUrlAtom =
-      Atom(name: 'ChatStore.avatarUrl', context: context);
-
-  @override
-  String get avatarUrl {
-    _$avatarUrlAtom.reportRead();
-    return super.avatarUrl;
-  }
-
-  @override
-  set avatarUrl(String value) {
-    _$avatarUrlAtom.reportWrite(value, super.avatarUrl, () {
-      super.avatarUrl = value;
+  set contacts(List<Contact> value) {
+    _$contactsAtom.reportWrite(value, super.contacts, () {
+      super.contacts = value;
     });
   }
 
@@ -137,6 +113,17 @@ mixin _$Chat on ChatStore, Store {
   }
 
   @override
+  void getContacts() {
+    final _$actionInfo =
+        _$ChatStoreActionController.startAction(name: 'ChatStore.getContacts');
+    try {
+      return super.getContacts();
+    } finally {
+      _$ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setContactId(String value) {
     final _$actionInfo =
         _$ChatStoreActionController.startAction(name: 'ChatStore.setContactId');
@@ -151,12 +138,10 @@ mixin _$Chat on ChatStore, Store {
   String toString() {
     return '''
 contactId: ${contactId},
-contactName: ${contactName},
-online: ${online},
-avatarUrl: ${avatarUrl},
+contact: ${contact},
+contacts: ${contacts},
 userId: ${userId},
-messages: ${messages},
-getChatData: ${getChatData}
+messages: ${messages}
     ''';
   }
 }
