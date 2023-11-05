@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login.dart';
+part of 'register.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'login.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$Login on LoginStore, Store {
-  late final _$emailAtom = Atom(name: 'LoginStore.email', context: context);
+mixin _$Register on RegisterStore, Store {
+  late final _$emailAtom = Atom(name: 'RegisterStore.email', context: context);
 
   @override
   String get email {
@@ -25,7 +25,7 @@ mixin _$Login on LoginStore, Store {
   }
 
   late final _$passwordAtom =
-      Atom(name: 'LoginStore.password', context: context);
+      Atom(name: 'RegisterStore.password', context: context);
 
   @override
   String get password {
@@ -40,36 +40,36 @@ mixin _$Login on LoginStore, Store {
     });
   }
 
-  late final _$loginWithMailAsyncAction =
-      AsyncAction('LoginStore.loginWithMail', context: context);
+  late final _$registerWithMailAsyncAction =
+      AsyncAction('RegisterStore.registerWithMail', context: context);
 
   @override
-  Future<bool> loginWithMail() {
-    return _$loginWithMailAsyncAction.run(() => super.loginWithMail());
+  Future<bool> registerWithMail() {
+    return _$registerWithMailAsyncAction.run(() => super.registerWithMail());
   }
 
-  late final _$LoginStoreActionController =
-      ActionController(name: 'LoginStore', context: context);
+  late final _$RegisterStoreActionController =
+      ActionController(name: 'RegisterStore', context: context);
 
   @override
   void setEmail(String value) {
-    final _$actionInfo =
-        _$LoginStoreActionController.startAction(name: 'LoginStore.setEmail');
+    final _$actionInfo = _$RegisterStoreActionController.startAction(
+        name: 'RegisterStore.setEmail');
     try {
       return super.setEmail(value);
     } finally {
-      _$LoginStoreActionController.endAction(_$actionInfo);
+      _$RegisterStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setPassword(String value) {
-    final _$actionInfo = _$LoginStoreActionController.startAction(
-        name: 'LoginStore.setPassword');
+    final _$actionInfo = _$RegisterStoreActionController.startAction(
+        name: 'RegisterStore.setPassword');
     try {
       return super.setPassword(value);
     } finally {
-      _$LoginStoreActionController.endAction(_$actionInfo);
+      _$RegisterStoreActionController.endAction(_$actionInfo);
     }
   }
 

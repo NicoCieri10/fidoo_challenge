@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:fidooo_challenge/auth/auth.dart';
 import 'package:mobx/mobx.dart';
 
-part 'login.g.dart';
+part 'register.g.dart';
 
-class Login = LoginStore with _$Login;
+class Register = RegisterStore with _$Register;
 
-abstract class LoginStore with Store {
+abstract class RegisterStore with Store {
   @observable
   String email = '';
 
@@ -21,9 +21,9 @@ abstract class LoginStore with Store {
   void setPassword(String value) => password = value;
 
   @action
-  Future<bool> loginWithMail() async {
+  Future<bool> registerWithMail() async {
     try {
-      final authUser = await authManager.signInWithEmail(
+      final authUser = await authManager.createAccountWithEmail(
         email,
         password,
       );
@@ -32,7 +32,7 @@ abstract class LoginStore with Store {
 
       return true;
     } catch (e) {
-      log('login error: $e');
+      log('register error: $e');
       return false;
     }
   }

@@ -45,7 +45,6 @@ class FirebaseAuthManager {
       );
 
   Future<BaseAuthUser?> createAccountWithEmail(
-    BuildContext context,
     String email,
     String password,
   ) =>
