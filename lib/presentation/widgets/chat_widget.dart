@@ -11,6 +11,7 @@ class ChatWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () => context.pushNamed(
         ChatScreen.route,
         pathParameters: {'contactId': contact.id},
@@ -24,9 +25,12 @@ class ChatWidget extends StatelessWidget {
           height: 70,
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage(contact.avatarUrl),
+              Hero(
+                tag: contact.id,
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(contact.avatarUrl),
+                ),
               ),
               const SizedBox(width: 20),
               Text(

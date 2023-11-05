@@ -21,6 +21,24 @@ class ChatRepository {
       senderId: '0',
       sender: Sender.user,
     ),
+    Message(
+      text: 'Hi!',
+      time: DateTime.now(),
+      senderId: '2',
+      sender: Sender.other,
+    ),
+    Message(
+      text: 'How are you?',
+      time: DateTime.now(),
+      senderId: '2',
+      sender: Sender.other,
+    ),
+    Message(
+      text: 'Fine',
+      time: DateTime.now(),
+      senderId: '3',
+      sender: Sender.other,
+    ),
   ];
 
   final contacts = [
@@ -33,15 +51,26 @@ class ChatRepository {
     ),
     const Contact(
       avatarUrl:
-          'https://i.pinimg.com/564x/fb/a1/f8/fba1f8d46d07866fbbd520be71f73087.jpg',
+          'https://thumbs.dreamstime.com/b/vectores-de-imagen-perfil-avatar-masculino-desconocido-empresario-vectorial-179373829.jpg',
       id: '2',
-      name: 'Juan',
+      name: 'Nico',
+      online: false,
+    ),
+    const Contact(
+      avatarUrl:
+          'https://cdn5.vectorstock.com/i/1000x1000/73/04/female-avatar-profile-icon-round-woman-face-vector-18307304.jpg',
+      id: '3',
+      name: 'Agus',
       online: true,
     ),
   ];
 
   List<Message> getMessages(String userId) {
-    return messages;
+    return messages
+        .where(
+          (element) => element.senderId == userId || element.senderId == '0',
+        )
+        .toList();
   }
 
   void sendMessage(Message message) {

@@ -2,8 +2,13 @@ import 'package:fidooo_challenge/presentation/presentation.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
-  initialLocation: HomeScreen.route,
+  initialLocation: LoginScreen.route,
   routes: <GoRoute>[
+    GoRoute(
+      path: LoginScreen.route,
+      name: LoginScreen.route,
+      builder: (context, state) => const LoginScreen(),
+    ),
     GoRoute(
       path: HomeScreen.route,
       name: HomeScreen.route,

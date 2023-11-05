@@ -26,6 +26,13 @@ abstract class ChatStore with Store {
   @observable
   ObservableList<Message> messages = ObservableList<Message>();
 
+  @computed
+  ChatEntitie get getChatData => ChatEntitie(
+        contact: contact,
+        messages: messages,
+        id: contactId,
+      );
+
   @action
   void sendMessage(String value) {
     final message = Message(
@@ -34,9 +41,8 @@ abstract class ChatStore with Store {
       senderId: userId,
       sender: Sender.user,
     );
-    // messages.add(message);
+    messages.add(message);
     _chatRepository.sendMessage(message);
-    getMessages();
   }
 
   @action

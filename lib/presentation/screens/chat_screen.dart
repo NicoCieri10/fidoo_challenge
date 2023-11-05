@@ -1,8 +1,7 @@
-// import 'package:fidooo_challenge/domain/domain.dart';
+import 'package:fidooo_challenge/domain/domain.dart';
 import 'package:fidooo_challenge/models/models.dart';
 import 'package:fidooo_challenge/presentation/presentation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
@@ -20,35 +19,35 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final Chat chat = Chat();
-  // late final ChatEntitie chatEntitie;
+  late final ChatEntitie chatEntitie;
 
   @override
   void initState() {
-    // chatEntitie = chat.getChatData;
     chat.setContactId(widget.contactId!);
+    chatEntitie = chat.getChatData;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
-    // TODO: fix functiolaity
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.background,
         body: Column(
           children: [
-            Observer(
-              builder: (context) => ChatHeader(
-                avatarUrl: chat.contact?.avatarUrl ?? '',
-                contactName: chat.contact?.name ?? '',
-                online: chat.contact?.online ?? false,
-              ),
+            // Observer(
+            //   builder: (context) => ChatHeader(chatEntitie),
+            // ),
+            // Observer(
+            //   builder: (_) => _ChatBody(chat),
+            // ),
+            ChatHeader(chatEntitie),
+            _ChatBody(chat),
+            _ChatInput(
+              onValue: (value) => setState(() => chat.sendMessage(value)),
             ),
-            Observer(
-              builder: (_) => _ChatBody(chat),
-            ),
-            _ChatInput(onValue: chat.sendMessage),
           ],
         ),
       ),
