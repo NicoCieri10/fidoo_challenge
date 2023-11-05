@@ -1,4 +1,3 @@
-import 'package:fidooo_challenge/data/repository/repository.dart';
 import 'package:fidooo_challenge/domain/domain.dart';
 import 'package:fidooo_challenge/models/models.dart';
 import 'package:mobx/mobx.dart';

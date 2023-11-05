@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   build_runner: ^2.4.6
+  core:
+    path: ./packages/core
   firebase_auth: ^4.12.1
   firebase_core: ^2.21.0
   flutter:

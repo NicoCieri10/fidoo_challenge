@@ -1,5 +1,4 @@
-import 'package:fidooo_challenge/domain/domain.dart';
-import 'package:fidooo_challenge/models/models.dart';
+import 'package:core/core.dart';
 
 class ChatEntitie {
   final String id;
