@@ -56,9 +56,7 @@ abstract class ChatStore with Store {
   }
 
   @action
-  void getContacts() {
-    contacts = _chatRepository.getContacts();
-  }
+  void getContacts() => contacts = _chatRepository.getContacts();
 
   @action
   void setContactId(String value) {

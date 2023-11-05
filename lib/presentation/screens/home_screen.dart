@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  static const String route = '/';
+  static const String route = '/home';
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +27,13 @@ class _ChatsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Chat chat = Chat();
-    chat.getContacts();
+    final Home home = Home();
+    home.getContacts();
 
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 15),
-      itemCount: chat.contacts.length,
-      itemBuilder: (context, index) => ChatWidget(chat.contacts[index]),
+      itemCount: home.contacts.length,
+      itemBuilder: (context, index) => ChatWidget(home.contacts[index]),
     );
   }
 }

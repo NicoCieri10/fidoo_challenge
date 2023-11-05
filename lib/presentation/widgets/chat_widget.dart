@@ -11,7 +11,7 @@ class ChatWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      behavior: HitTestBehavior.translucent,
+      behavior: HitTestBehavior.opaque,
       onTap: () => context.pushNamed(
         ChatScreen.route,
         pathParameters: {'contactId': contact.id},

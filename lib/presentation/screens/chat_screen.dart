@@ -23,9 +23,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
+    super.initState();
     chat.setContactId(widget.contactId!);
     chatEntitie = chat.getChatData;
-    super.initState();
   }
 
   @override

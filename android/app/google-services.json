@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "234698706348",
+    "project_id": "fidooo-8c00b",
+    "storage_bucket": "fidooo-8c00b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234698706348:android:6fd61936102358bbf5fe09",
+        "android_client_info": {
+          "package_name": "com.example.fidooo_challenge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJUaSpc51aPQgrdYu0fb4lsLrz42k128s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
