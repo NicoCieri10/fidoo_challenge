@@ -13,7 +13,7 @@ abstract class HomeStore with Store {
   List<Contact> contacts = [];
 
   @action
-  void getContacts() async {
+  Future<void> getContacts() async {
     contacts = await _contactsRepository.getContacts();
   }
 }

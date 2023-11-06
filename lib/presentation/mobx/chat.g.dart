@@ -83,16 +83,40 @@ mixin _$Chat on ChatStore, Store {
       Atom(name: 'ChatStore.messages', context: context);
 
   @override
-  ObservableList<Message> get messages {
+  List<Message> get messages {
     _$messagesAtom.reportRead();
     return super.messages;
   }
 
   @override
-  set messages(ObservableList<Message> value) {
+  set messages(List<Message> value) {
     _$messagesAtom.reportWrite(value, super.messages, () {
       super.messages = value;
     });
+  }
+
+  late final _$getMessagesAsyncAction =
+      AsyncAction('ChatStore.getMessages', context: context);
+
+  @override
+  Future getMessages() {
+    return _$getMessagesAsyncAction.run(() => super.getMessages());
+  }
+
+  late final _$getContactsAsyncAction =
+      AsyncAction('ChatStore.getContacts', context: context);
+
+  @override
+  Future getContacts() {
+    return _$getContactsAsyncAction.run(() => super.getContacts());
+  }
+
+  late final _$setContactIdAsyncAction =
+      AsyncAction('ChatStore.setContactId', context: context);
+
+  @override
+  Future setContactId(String value) {
+    return _$setContactIdAsyncAction.run(() => super.setContactId(value));
   }
 
   late final _$ChatStoreActionController =
@@ -104,39 +128,6 @@ mixin _$Chat on ChatStore, Store {
         _$ChatStoreActionController.startAction(name: 'ChatStore.sendMessage');
     try {
       return super.sendMessage(value);
-    } finally {
-      _$ChatStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void getMessages() {
-    final _$actionInfo =
-        _$ChatStoreActionController.startAction(name: 'ChatStore.getMessages');
-    try {
-      return super.getMessages();
-    } finally {
-      _$ChatStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void getContacts() {
-    final _$actionInfo =
-        _$ChatStoreActionController.startAction(name: 'ChatStore.getContacts');
-    try {
-      return super.getContacts();
-    } finally {
-      _$ChatStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setContactId(String value) {
-    final _$actionInfo =
-        _$ChatStoreActionController.startAction(name: 'ChatStore.setContactId');
-    try {
-      return super.setContactId(value);
     } finally {
       _$ChatStoreActionController.endAction(_$actionInfo);
     }

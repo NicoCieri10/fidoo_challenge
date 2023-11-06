@@ -1,8 +1,10 @@
 import 'package:fidooo_challenge/presentation/presentation.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
   initialLocation: LoginScreen.route,
+  errorBuilder: (context, state) => const RoutingErrorPage(),
   routes: <GoRoute>[
     GoRoute(
       path: LoginScreen.route,
@@ -28,3 +30,18 @@ final appRouter = GoRouter(
     ),
   ],
 );
+
+class RoutingErrorPage extends StatelessWidget {
+  const RoutingErrorPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text(
+          'No hay rutas',
+        ),
+      ),
+    );
+  }
+}

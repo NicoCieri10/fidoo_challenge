@@ -9,7 +9,7 @@ class ChatRepository {
   static FirebaseFirestore get _firebase => FirebaseFirestore.instance;
 
   /// Method for getting the [Message] list.
-  Future<List<Message>?> getMessages(String userId) async {
+  Future<List<Message>> getMessages(String userId) async {
     try {
       final data = await _collection.doc(userId).get();
       if (data.data() == null) return [];

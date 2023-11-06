@@ -2,6 +2,7 @@ import 'package:fidooo_challenge/config/config.dart';
 import 'package:fidooo_challenge/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,12 +31,19 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  late final GoRouter _router;
+  @override
+  void initState() {
+    super.initState();
+    _router = appRouter;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Fidooo Challenge',
-      routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
+      routerConfig: _router,
       theme: AppTheme().themeData,
     );
   }

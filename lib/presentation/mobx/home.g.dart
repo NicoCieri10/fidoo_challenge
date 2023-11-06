@@ -25,18 +25,12 @@ mixin _$Home on HomeStore, Store {
     });
   }
 
-  late final _$HomeStoreActionController =
-      ActionController(name: 'HomeStore', context: context);
+  late final _$getContactsAsyncAction =
+      AsyncAction('HomeStore.getContacts', context: context);
 
   @override
-  void getContacts() {
-    final _$actionInfo =
-        _$HomeStoreActionController.startAction(name: 'HomeStore.getContacts');
-    try {
-      return super.getContacts();
-    } finally {
-      _$HomeStoreActionController.endAction(_$actionInfo);
-    }
+  Future getContacts() {
+    return _$getContactsAsyncAction.run(() => super.getContacts());
   }
 
   @override

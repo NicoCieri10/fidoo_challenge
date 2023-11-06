@@ -23,7 +23,7 @@ abstract class ChatStore with Store {
   String userId = '0';
 
   @observable
-  ObservableList<Message> messages = ObservableList<Message>();
+  List<Message> messages = [];
 
   @computed
   ChatEntitie get getChatData => ChatEntitie(
@@ -45,20 +45,19 @@ abstract class ChatStore with Store {
   }
 
   @action
-  void getMessages() async {
+  Future<void> getMessages() async {
     messages.clear();
-    final coreMessages = await _chatRepository.getMessages(contactId);
-    final newMessages = ObservableList<Message>.of(coreMessages ?? []);
+    final newMessages = await _chatRepository.getMessages(contactId);
     messages.addAll(newMessages);
     messages.sort((a, b) => a.time.compareTo(b.time));
   }
 
   @action
-  void getContacts() async =>
+  Future<void> getContacts() async =>
       contacts = await _contactsRepository.getContacts();
 
   @action
-  void setContactId(String value) async {
+  Future<void> setContactId(String value) async {
     contactId = value;
     contacts = await _contactsRepository.getContacts();
     contact = contacts.firstWhere((element) => element.id == value);
