@@ -17,7 +17,6 @@ class ChatRepository {
             isEqualTo: contactId,
           )
           .get();
-
       if (data.docs.isEmpty) return null;
 
       final chat = data.docs.first;
