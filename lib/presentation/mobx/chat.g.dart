@@ -17,6 +17,21 @@ mixin _$Chat on ChatStore, Store {
               name: 'ChatStore.getChatData'))
           .value;
 
+  late final _$loadingAtom = Atom(name: 'ChatStore.loading', context: context);
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   late final _$contactIdAtom =
       Atom(name: 'ChatStore.contactId', context: context);
 
@@ -30,6 +45,21 @@ mixin _$Chat on ChatStore, Store {
   set contactId(String value) {
     _$contactIdAtom.reportWrite(value, super.contactId, () {
       super.contactId = value;
+    });
+  }
+
+  late final _$chatIdAtom = Atom(name: 'ChatStore.chatId', context: context);
+
+  @override
+  String get chatId {
+    _$chatIdAtom.reportRead();
+    return super.chatId;
+  }
+
+  @override
+  set chatId(String value) {
+    _$chatIdAtom.reportWrite(value, super.chatId, () {
+      super.chatId = value;
     });
   }
 
@@ -95,12 +125,12 @@ mixin _$Chat on ChatStore, Store {
     });
   }
 
-  late final _$getMessagesAsyncAction =
-      AsyncAction('ChatStore.getMessages', context: context);
+  late final _$getChatAsyncAction =
+      AsyncAction('ChatStore.getChat', context: context);
 
   @override
-  Future<void> getMessages() {
-    return _$getMessagesAsyncAction.run(() => super.getMessages());
+  Future<void> getChat() {
+    return _$getChatAsyncAction.run(() => super.getChat());
   }
 
   late final _$getContactsAsyncAction =
@@ -134,9 +164,22 @@ mixin _$Chat on ChatStore, Store {
   }
 
   @override
+  void setMessages(List<Message> newMessages) {
+    final _$actionInfo =
+        _$ChatStoreActionController.startAction(name: 'ChatStore.setMessages');
+    try {
+      return super.setMessages(newMessages);
+    } finally {
+      _$ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+loading: ${loading},
 contactId: ${contactId},
+chatId: ${chatId},
 contact: ${contact},
 contacts: ${contacts},
 userId: ${userId},

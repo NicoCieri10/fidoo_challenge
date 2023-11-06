@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:fidooo_challenge/presentation/presentation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
@@ -18,13 +19,11 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final Chat chat = Chat();
-  late final ChatEntitie chatEntitie;
 
   @override
   void initState() {
     super.initState();
     chat.setContactId(widget.contactId!);
-    chatEntitie = chat.getChatData;
   }
 
   @override
@@ -34,20 +33,19 @@ class _ChatScreenState extends State<ChatScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.background,
-        body: Column(
-          children: [
-            // Observer(
-            //   builder: (context) => ChatHeader(chatEntitie),
-            // ),
-            // Observer(
-            //   builder: (_) => _ChatBody(chat),
-            // ),
-            ChatHeader(chatEntitie),
-            _ChatBody(chat),
-            _ChatInput(
-              onValue: (value) => setState(() => chat.sendMessage(value)),
-            ),
-          ],
+        body: Observer(
+          builder: (_) => chat.loading
+              ? const LoadingWidget()
+              : Column(
+                  children: [
+                    ChatHeader(chat.getChatData),
+                    _ChatBody(chat),
+                    _ChatInput(
+                      onValue: (value) =>
+                          setState(() => chat.sendMessage(value)),
+                    ),
+                  ],
+                ),
         ),
       ),
     );

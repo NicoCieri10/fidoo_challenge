@@ -11,7 +11,13 @@ class Chat = ChatStore with _$Chat;
 
 abstract class ChatStore with Store {
   @observable
+  bool loading = false;
+
+  @observable
   String contactId = '';
+
+  @observable
+  String chatId = '';
 
   @observable
   Contact? contact;
@@ -29,7 +35,8 @@ abstract class ChatStore with Store {
   ChatEntitie get getChatData => ChatEntitie(
         contact: contact,
         messages: messages,
-        id: contactId,
+        contactId: contactId,
+        id: chatId,
       );
 
   @action
@@ -37,17 +44,31 @@ abstract class ChatStore with Store {
     final message = Message(
       text: value,
       time: DateTime.now(),
-      senderId: userId,
       sender: Sender.user,
     );
     messages.add(message);
-    _chatRepository.sendMessage(message);
+    _chatRepository.sendMessage(
+      message: message,
+      chatId: chatId,
+    );
   }
 
   @action
-  Future<void> getMessages() async {
+  Future<void> getChat() async {
+    loading = true;
+
+    final chat = await _chatRepository.getChatByContact(contactId);
+    if (chat == null) return;
+
+    chatId = chat.id;
+    setMessages(chat.messages);
+
+    loading = false;
+  }
+
+  @action
+  void setMessages(List<Message> newMessages) {
     messages.clear();
-    final newMessages = await _chatRepository.getMessages(contactId);
     messages.addAll(newMessages);
     messages.sort((a, b) => a.time.compareTo(b.time));
   }
@@ -58,9 +79,12 @@ abstract class ChatStore with Store {
 
   @action
   Future<void> setContactId(String value) async {
+    loading = true;
+
     contactId = value;
-    contacts = await _contactsRepository.getContacts();
-    contact = contacts.firstWhere((element) => element.id == value);
-    getMessages();
+    contact = await _contactsRepository.getContactById(value);
+    await getChat();
+
+    loading = false;
   }
 }
