@@ -29,6 +29,7 @@ class MessageWidget extends StatelessWidget {
             ),
             child: Text(
               // TODO: add time
+              // TODO: add time
               message.text,
               style: const TextStyle(
                 color: Colors.white,
