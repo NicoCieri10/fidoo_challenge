@@ -1,10 +1,10 @@
-import 'package:fidooo_challenge/domain/domain.dart';
-import 'package:fidooo_challenge/models/models.dart';
+import 'package:core/core.dart';
 import 'package:mobx/mobx.dart';
 
 part 'chat.g.dart';
 
 final _chatRepository = ChatRepository();
+final _contactsRepository = ContactsRepository();
 
 /// Store for managing the chat screen.
 class Chat = ChatStore with _$Chat;
@@ -45,22 +45,22 @@ abstract class ChatStore with Store {
   }
 
   @action
-  void getMessages() {
+  void getMessages() async {
     messages.clear();
-    final newMessages = ObservableList<Message>.of(
-      _chatRepository.getMessages(contactId),
-    );
+    final coreMessages = await _chatRepository.getMessages(contactId);
+    final newMessages = ObservableList<Message>.of(coreMessages ?? []);
     messages.addAll(newMessages);
     messages.sort((a, b) => a.time.compareTo(b.time));
   }
 
   @action
-  void getContacts() => contacts = _chatRepository.getContacts();
+  void getContacts() async =>
+      contacts = await _contactsRepository.getContacts();
 
   @action
-  void setContactId(String value) {
+  void setContactId(String value) async {
     contactId = value;
-    contacts = _chatRepository.getContacts();
+    contacts = await _contactsRepository.getContacts();
     contact = contacts.firstWhere((element) => element.id == value);
     getMessages();
   }

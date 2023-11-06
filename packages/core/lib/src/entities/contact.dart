@@ -1,13 +1,20 @@
 class Contact {
   const Contact({
-    required this.name,
-    required this.id,
-    required this.avatarUrl,
-    required this.online,
+    this.name,
+    this.id,
+    this.avatarUrl,
+    this.online,
   });
 
-  final String name;
-  final String id;
-  final String avatarUrl;
-  final bool online;
+  final String? name;
+  final String? id;
+  final String? avatarUrl;
+  final bool? online;
+
+  factory Contact.fromMap(Map<String, dynamic> json) => Contact(
+        name: json['name'] as String,
+        id: json['id'] as String,
+        avatarUrl: json['avatarUrl'] as String,
+        online: json['online'] as bool,
+      );
 }

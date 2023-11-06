@@ -1,5 +1,5 @@
 // import 'package:fidooo_challenge/domain/domain.dart';
-import 'package:fidooo_challenge/domain/domain.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

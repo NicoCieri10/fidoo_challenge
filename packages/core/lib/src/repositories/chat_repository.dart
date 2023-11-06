@@ -12,11 +12,11 @@ class ChatRepository {
   Future<List<Message>?> getMessages(String userId) async {
     try {
       final data = await _collection.doc(userId).get();
-      if (data.data() == null) return null;
+      if (data.data() == null) return [];
 
       return <Message>[];
     } catch (e) {
-      log('repository error: $e');
+      log('ChatRepository error: $e');
       return [];
     }
   }
