@@ -44,7 +44,7 @@ class ChatRepository {
   final contacts = [
     const Contact(
       avatarUrl:
-          'https://i.pinimg.com/564x/fb/a1/f8/fba1f8d46d07866fbbd520be71f73087.jpg',
+          'https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp',
       id: '1',
       name: 'Juan',
       online: true,
