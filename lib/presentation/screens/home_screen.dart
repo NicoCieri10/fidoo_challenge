@@ -32,11 +32,13 @@ class _ChatsList extends StatelessWidget {
     home.getContacts();
 
     return Observer(
-      builder: (_) => ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 15),
-        itemCount: home.contacts.length,
-        itemBuilder: (context, index) => ChatWidget(home.contacts[index]),
-      ),
+      builder: (_) => home.loading
+          ? const LoadingWidget()
+          : ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              itemCount: home.contacts.length,
+              itemBuilder: (context, index) => ChatWidget(home.contacts[index]),
+            ),
     );
   }
 }

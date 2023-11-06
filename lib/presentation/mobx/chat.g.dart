@@ -99,7 +99,7 @@ mixin _$Chat on ChatStore, Store {
       AsyncAction('ChatStore.getMessages', context: context);
 
   @override
-  Future getMessages() {
+  Future<void> getMessages() {
     return _$getMessagesAsyncAction.run(() => super.getMessages());
   }
 
@@ -107,7 +107,7 @@ mixin _$Chat on ChatStore, Store {
       AsyncAction('ChatStore.getContacts', context: context);
 
   @override
-  Future getContacts() {
+  Future<void> getContacts() {
     return _$getContactsAsyncAction.run(() => super.getContacts());
   }
 
@@ -115,7 +115,7 @@ mixin _$Chat on ChatStore, Store {
       AsyncAction('ChatStore.setContactId', context: context);
 
   @override
-  Future setContactId(String value) {
+  Future<void> setContactId(String value) {
     return _$setContactIdAsyncAction.run(() => super.setContactId(value));
   }
 

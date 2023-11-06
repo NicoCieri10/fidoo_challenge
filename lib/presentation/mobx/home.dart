@@ -12,8 +12,13 @@ abstract class HomeStore with Store {
   @observable
   List<Contact> contacts = [];
 
+  @observable
+  bool loading = false;
+
   @action
   Future<void> getContacts() async {
+    loading = true;
     contacts = await _contactsRepository.getContacts();
+    loading = false;
   }
 }

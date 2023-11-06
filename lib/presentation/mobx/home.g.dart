@@ -25,18 +25,34 @@ mixin _$Home on HomeStore, Store {
     });
   }
 
+  late final _$loadingAtom = Atom(name: 'HomeStore.loading', context: context);
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   late final _$getContactsAsyncAction =
       AsyncAction('HomeStore.getContacts', context: context);
 
   @override
-  Future getContacts() {
+  Future<void> getContacts() {
     return _$getContactsAsyncAction.run(() => super.getContacts());
   }
 
   @override
   String toString() {
     return '''
-contacts: ${contacts}
+contacts: ${contacts},
+loading: ${loading}
     ''';
   }
 }
