@@ -18,6 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
 
+  bool _obscureText = true;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -72,9 +74,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomField(
                   hintText: 'Password',
                   controller: passController,
+                  obscureText: _obscureText,
                   onTapOutside: (_) => focus.requestFocus(unfocus),
                   focusNode: passwordNode,
                   onFieldSubmitted: (_) => login(),
+                  suffixIcon: InkWell(
+                    onTap: () => setState(() => _obscureText = !_obscureText),
+                    focusNode: FocusNode(skipTraversal: true),
+                    child: Icon(
+                      _obscureText
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                      size: 20.0,
+                    ),
+                  ),
                   validator: (value) {
                     const error = 'Ingrese una contraseña válida.';
                     final pass = value?.trim();

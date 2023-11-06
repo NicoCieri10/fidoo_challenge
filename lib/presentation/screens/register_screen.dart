@@ -20,6 +20,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passController = TextEditingController();
   final confirmPassController = TextEditingController();
 
+  bool _obscureText = true;
+  bool _obscureText2 = true;
+
   @override
   void dispose() {
     confirmPassController.dispose();
@@ -76,10 +79,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomField(
                   hintText: 'Contraseña',
                   controller: passController,
+                  obscureText: _obscureText,
                   onTapOutside: (_) => focus.requestFocus(unfocus),
                   onFieldSubmitted: (_) =>
                       focus.requestFocus(confirmPasswordNode),
                   focusNode: passwordNode,
+                  suffixIcon: InkWell(
+                    onTap: () => setState(() => _obscureText = !_obscureText),
+                    focusNode: FocusNode(skipTraversal: true),
+                    child: Icon(
+                      _obscureText
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                      size: 20.0,
+                    ),
+                  ),
                   validator: (value) {
                     const error = 'Ingrese una contraseña válida.';
                     final pass = value?.trim();
@@ -93,9 +107,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomField(
                   hintText: 'Confirmar contraseña',
                   controller: confirmPassController,
+                  obscureText: _obscureText2,
                   onTapOutside: (_) => focus.requestFocus(unfocus),
                   focusNode: confirmPasswordNode,
                   onFieldSubmitted: (_) => register(),
+                  suffixIcon: InkWell(
+                    onTap: () => setState(() => _obscureText2 = !_obscureText2),
+                    focusNode: FocusNode(skipTraversal: true),
+                    child: Icon(
+                      _obscureText2
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                      size: 20.0,
+                    ),
+                  ),
                   validator: (value) {
                     const error = 'Ingrese una contraseña válida.';
                     final pass = value?.trim();
