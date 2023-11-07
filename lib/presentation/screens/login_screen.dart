@@ -1,5 +1,6 @@
 import 'package:fidooo_challenge/presentation/presentation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final passController = TextEditingController();
 
   bool _obscureText = true;
+
+  final Login loginStore = Login();
 
   @override
   void dispose() {
@@ -98,16 +101,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                // TODO: reset password
                 AuthLinkWidget(
                   question: '¿No tienes cuenta?',
                   link: 'Regístrate',
                   onTap: () => context.goNamed(RegisterScreen.route),
                 ),
+                // TODO: reset password
                 const Spacer(flex: 2),
-                AuthButton(
-                  text: 'Iniciar',
-                  onPressed: login,
+                Observer(
+                  builder: (_) => AuthButton(
+                    text: 'Iniciar',
+                    onPressed: login,
+                    loading: loginStore.loading,
+                  ),
                 ),
                 const Spacer(flex: 3),
               ],
@@ -127,14 +133,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (email.isEmpty || pass.isEmpty) return;
 
-    final Login login = Login();
+    loginStore.setEmail(emailController.value.text);
+    loginStore.setPassword(passController.value.text);
 
-    login.setEmail(emailController.value.text);
-    login.setPassword(passController.value.text);
-
-    final bool logged = await login.loginWithMail();
+    final bool logged = await loginStore.loginWithMail();
 
     if (!context.mounted) return;
     if (logged) context.pushReplacementNamed(HomeScreen.route);
+
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: const Text(
+            'No se pudo iniciar sesión. Verifique que los datos sean correctos y cree una cuenta si no tiene una.'),
+        actions: [
+          TextButton(
+            onPressed: context.pop,
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:fidooo_challenge/presentation/presentation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -22,6 +23,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   bool _obscureText = true;
   bool _obscureText2 = true;
+
+  final Register registerStore = Register();
 
   @override
   void dispose() {
@@ -133,13 +136,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 20),
                 AuthLinkWidget(
                   question: '¿Ya tienes cuenta?',
-                  link: 'inicia sesión',
+                  link: 'Inicia sesión',
                   onTap: () => context.goNamed(LoginScreen.route),
                 ),
                 const Spacer(flex: 2),
-                AuthButton(
-                  text: 'Registrarse',
-                  onPressed: register,
+                Observer(
+                  builder: (_) => AuthButton(
+                    text: 'Registrarse',
+                    onPressed: register,
+                    loading: registerStore.loading,
+                  ),
                 ),
                 const Spacer(flex: 3),
               ],
@@ -169,12 +175,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return;
     }
 
-    final Register register = Register();
+    registerStore.setEmail(emailController.value.text);
+    registerStore.setPassword(passController.value.text);
 
-    register.setEmail(emailController.value.text);
-    register.setPassword(passController.value.text);
-
-    final bool logged = await register.registerWithMail();
+    final bool logged = await registerStore.registerWithMail();
 
     if (!context.mounted) return;
     if (logged) context.pushReplacementNamed(HomeScreen.route);

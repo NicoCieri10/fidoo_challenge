@@ -1,3 +1,4 @@
+import 'package:fidooo_challenge/presentation/presentation.dart';
 import 'package:flutter/material.dart';
 
 class AuthButton extends StatelessWidget {
@@ -5,10 +6,12 @@ class AuthButton extends StatelessWidget {
     super.key,
     this.onPressed,
     required this.text,
+    this.loading = false,
   });
 
   final void Function()? onPressed;
   final String text;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +20,12 @@ class AuthButton extends StatelessWidget {
       width: 180,
       child: ElevatedButton(
         onPressed: onPressed,
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 22),
-        ),
+        child: loading
+            ? const LoadingWidget()
+            : Text(
+                text,
+                style: const TextStyle(fontSize: 22),
+              ),
       ),
     );
   }

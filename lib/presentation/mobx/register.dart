@@ -9,6 +9,9 @@ class Register = RegisterStore with _$Register;
 
 abstract class RegisterStore with Store {
   @observable
+  bool loading = false;
+
+  @observable
   String email = '';
 
   @observable
@@ -22,6 +25,7 @@ abstract class RegisterStore with Store {
 
   @action
   Future<bool> registerWithMail() async {
+    loading = true;
     try {
       final authUser = await authManager.createAccountWithEmail(
         email,
@@ -30,9 +34,11 @@ abstract class RegisterStore with Store {
 
       if (authUser == null) throw Exception('User not found');
 
+      loading = false;
       return true;
     } catch (e) {
       log('register error: $e');
+      loading = false;
       return false;
     }
   }

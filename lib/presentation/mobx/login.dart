@@ -9,6 +9,9 @@ class Login = LoginStore with _$Login;
 
 abstract class LoginStore with Store {
   @observable
+  bool loading = false;
+
+  @observable
   String email = '';
 
   @observable
@@ -22,6 +25,7 @@ abstract class LoginStore with Store {
 
   @action
   Future<bool> loginWithMail() async {
+    loading = true;
     try {
       final authUser = await authManager.signInWithEmail(
         email,
@@ -30,9 +34,11 @@ abstract class LoginStore with Store {
 
       if (authUser == null) throw Exception('User not found');
 
+      loading = false;
       return true;
     } catch (e) {
       log('login error: $e');
+      loading = false;
       return false;
     }
   }

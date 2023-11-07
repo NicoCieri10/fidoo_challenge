@@ -13,6 +13,7 @@ class ChatWidget extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => context.pushNamed(
+        // TODO: get chat before push
         ChatScreen.route,
         pathParameters: {'contactId': contact.id ?? ''},
       ),

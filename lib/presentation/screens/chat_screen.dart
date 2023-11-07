@@ -87,6 +87,7 @@ class _ChatInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = TextEditingController();
+    final focus = FocusScope.of(context);
     final focusNode = FocusNode();
 
     final outlineInputBorder = UnderlineInputBorder(
@@ -112,10 +113,11 @@ class _ChatInput extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        onTapOutside: (event) => focusNode.unfocus(),
+        onTapOutside: (event) => focus.requestFocus(FocusNode()),
         controller: controller,
         focusNode: focusNode,
         decoration: decoration,
+        textCapitalization: TextCapitalization.words,
         onFieldSubmitted: (value) {
           controller.clear();
           focusNode.requestFocus();

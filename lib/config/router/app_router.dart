@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
-  initialLocation: HomeScreen.route,
+  initialLocation: LoginScreen.route,
   errorBuilder: (context, state) => const RoutingErrorPage(),
   routes: <GoRoute>[
     GoRoute(

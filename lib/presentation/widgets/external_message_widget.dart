@@ -9,6 +9,7 @@ class ExternalMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
+    final time = '${message.time.hour}:${message.time.second}';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,11 +28,24 @@ class ExternalMessageWidget extends StatelessWidget {
               horizontal: 20.0,
               vertical: 10.0,
             ),
-            child: Text(
-              message.text,
-              style: const TextStyle(
-                color: Colors.white,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  message.text,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 3.0),
+                Text(
+                  time,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10.0,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
